@@ -1,7 +1,7 @@
 # check_robots.py
 
 from urllib.parse import urljoin
-from functions import check_url, log_error, log_success
+from utils import check_url, log_error, log_success
 import requests
 
 
@@ -36,5 +36,5 @@ def check_robots(url):
         return False
 
 # Example usage
-url = 'smartcursos.mycustom.page'
-check_robots(url)
+#url = 'smartcursos.mycustom.page'
+#check_robots(url)

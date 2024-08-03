@@ -1,32 +1,19 @@
+from start_sitemaps import consolidate_sitemaps
+from sitemap_crawler import crawl_sitemaps
+from virginia import check_page_availability
+from utils import encode_urls
 
-# collect_sitemaps.py
-
-from get_sitemaps import extract_sitemaps_from_robots, common_sitemap_filenames
-from check_robots import check_robots
-from functions import log_error, log_success
-import requests
-
-def collect_sitemaps(url):
-    sitemaps = []
-
-    robots_url = check_robots(url)
-    if robots_url:
-        response = requests.get(robots_url)
-        if response.status_code == 200:
-            robots_txt = response.text
-            sitemaps.extend(extract_sitemaps_from_robots(robots_txt))
-
-    sitemaps.extend(common_sitemap_filenames(url))
-
-    # Remove duplicates
-    sitemaps = list(set(sitemaps))
-
-    if sitemaps:
-        log_success(f"Found sitemaps: {sitemaps}")
+def website_sitemaps(website_url):
+    
+    encoded_url = encode_urls(text = website_url)
+    if not check_page_availability(url=encoded_url):
+        return False
     else:
-        log_error("No sitemaps found")
+        start_sitemaps = consolidate_sitemaps(url=website_url)
+        sitemaps_list = crawl_sitemaps(sitemaps = start_sitemaps)
+        
+        return sitemaps_list
 
-    return sitemaps
 # Example usage
-url = 'https://ruco.pt'
-print(collect_sitemaps(url))
+website = 'https://vivamelhor.pt/'
+print(website_sitemaps(website_url = website))

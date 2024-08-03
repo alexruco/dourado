@@ -22,9 +22,7 @@ def scrape_webpage(url):
         log_error(f"Failed to fetch {url}: {e}")
         return ""
 
-def encode_urls(text):
-    """Encode URLs in the text by replacing 'https://' with 'https_//'."""
-    return text.replace('https://', 'https_//')
+
 
 
 
