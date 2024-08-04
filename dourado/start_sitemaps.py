@@ -41,6 +41,6 @@ def consolidate_sitemaps(url):
 
 # Example usage
 if __name__ == "__main__":
-    url = 'https://mysitefaster.com'
+    url = 'https://vivamelhor.pt'
     found_sitemaps = consolidate_sitemaps(url)
     print(f"start_sitemaps eu:{found_sitemaps}")

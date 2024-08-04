@@ -65,4 +65,4 @@ def crawl_sitemaps_for_pages(sitemaps):
 if __name__ == "__main__":
     sitemap = ['https://mysitefaster.com/post-sitemap.xml']
     pages = crawl_sitemaps_for_pages(sitemap)
-    print(f"#pages_from_sitemap eu:{pages}")
+    log_success(f"#pages_from_sitemap eu:{pages}")

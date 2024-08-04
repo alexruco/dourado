@@ -20,7 +20,8 @@ def remove_duplicates(input_list):
     return output_list
 
 def log_success(message):
-    print(message)
+    #print(message)
+    silence = "is golden"
 
 def is_content_page(url):
     content_extensions = (

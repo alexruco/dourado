@@ -73,4 +73,4 @@ def crawl_sitemaps(sitemaps, depth=5):
 if __name__ == "__main__":
     initial_sitemaps = [('https://mysitefaster.com/sitemap_index.xml', 'available', 'valid')]
     all_sitemaps = crawl_sitemaps(initial_sitemaps)
-    print(all_sitemaps)
+    log_success(all_sitemaps)
