@@ -4,46 +4,42 @@ Welcome to **My Python Module**! This project is designed to [brief description 
 
 ## Features ✨
 
-- **Feature 1**: Explain the first feature. 🎉
-- **Feature 2**: Explain the second feature. 🔥
-- **Feature 3**: Explain the third feature. 🌟
+- **website_sitemaps(website_url)**: Returns a list of sitemaps. 🎉
+- **check_robots(url)**: Returns the URL of robots; False is there is none. 🔥
+- **extract_pages_from_sitemap(sitemap_url)**: Returns pages and sitemaps fron where they are found. 🌟
 
 ## Installation 💻
 
 You can install the package via pip:
 
 ```bash
-pip install my_python_module
+pip install GIT+https://github.com/alexruco/dourado
 Usage 📚
 
 Here's a quick example to get you started:
 <!--
 ```python
-from my_python_module import module
+from dourado import dourado
 
 # Example usage
-result = module.some_function(5, 10)
-print(result)
+website = 'https://mysitefaster.com/'
+robots = check_robots(url)
+sitemaps = website_sitemaps(website_url = website)
+pages_found = crawl_sitemaps_for_pages(sitemaps)
+
+print(f"robots:{robots}")  
+print(f"sitemaps:{sitemaps}")
+print(f"pages found:{pages_found}")
+
 ```
 -->
-Documentation 📖
 
-Documentation is available at [link to documentation].
-Running Tests 🧪
-
-To run the tests, you can use the unittest module or pytest.
-
-bash
-
-python -m unittest discover tests
-# or
-pytest
 
 ## Contributing 🤝
 
 We welcome contributions from the community! Here’s how you can get involved:
 
-1. **Report Bugs**: If you find a bug, please open an issue [here](https://github.com/yourusername/my_python_module/issues).
+1. **Report Bugs**: If you find a bug, please open an issue [here](https://github.com/alexruco/dourado/issues).
 2. **Suggest Features**: We’d love to hear your ideas! Suggest new features by opening an issue.
 3. **Submit Pull Requests**: Ready to contribute? Fork the repo, make your changes, and submit a pull request. Please ensure your code follows our coding standards and is well-documented.
 4. **Improve Documentation**: Help us improve our documentation. Feel free to make edits or add new content.

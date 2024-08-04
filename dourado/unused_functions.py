@@ -153,4 +153,9 @@ def is_non_page_link(link):
 
     crawl(root_url, 0)
     return list(internal_links_data.values()), list(external_links_data.values()), sitemap_links_data
+    
+    def encode_urls(text):
+    """Encode URLs in the text by replacing 'https://' with 'https_//'."""
+    return text.replace('https://', 'https_//')
+
     '''
