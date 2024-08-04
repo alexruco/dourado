@@ -17,7 +17,16 @@ You can install the package via pip:
 
 ```bash
 pip install GIT+https://github.com/alexruco/dourado 
-Usage 📚
+```
+Alternatively, you can clone the repository and install the dependencies from requirements.txt:
+
+```bash
+git clone https://github.com/alexruco/dourado.git
+cd dourado
+pip install -r requirements.txt
+
+```
+## Usage 📚
 
 Here's a quick example to get you started:
 <!--
