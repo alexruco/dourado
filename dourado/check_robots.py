@@ -3,6 +3,7 @@ from urllib.parse import urljoin, urlparse, urlunparse
 import requests
 from utils import log_error, log_success, remove_duplicates
 from virginia import check_page_availability
+from sitemap_validator import fetch_sitemap, validate_sitemap
 
 def fetch_robots_txt(url):
     """
@@ -73,29 +74,34 @@ def extract_sitemaps_from_robots(robots_txt):
 
 def check_sitemaps_availability(sitemaps):
     """
-    Checks the availability of each sitemap URL.
+    Checks the availability and validity of each sitemap URL.
     
     Args:
     sitemaps (list): List of sitemap URLs to check.
 
     Returns:
-    list: A list of tuples where each tuple contains a sitemap URL and a boolean indicating its availability.
+    list: A list of tuples where each tuple contains a sitemap URL, a string indicating its availability ("available" or "unavailable"), and a string indicating its validity ("valid" or "invalid").
     """
     sitemap_availability = []
     for sitemap in sitemaps:
         is_available = check_page_availability(sitemap)
-        sitemap_availability.append((sitemap, is_available))
-        log_success(f"#start_sitemaps.py/check_sitemaps_availability => sitemap: {sitemap}, available: {is_available}")
+        availability_status = 'available' if is_available else 'unavailable'
+        validity = "unavailable"
+        if is_available:
+            sitemap_content = fetch_sitemap(sitemap)
+            is_valid = validate_sitemap(sitemap_content) if sitemap_content else False
+            validity = "valid" if is_valid else "invalid"
+        sitemap_availability.append((sitemap, availability_status, validity))
+        log_success(f"#start_sitemaps.py/check_sitemaps_availability => sitemap: {sitemap}, availability: {availability_status}, validity: {validity}")
     return sitemap_availability
-
 # Example usage
 if __name__ == "__main__":
-    robots_txt_url = 'vivamelhor.pt'
+    robots_txt_url = 'mysitefaster.com'
     robots_txt = fetch_robots_txt(robots_txt_url)
     if robots_txt:
         log_success(f"Fetched robots.txt content:\n{robots_txt}")
         sitemaps = extract_sitemaps_from_robots(robots_txt)
         sitemap_availability = check_sitemaps_availability(sitemaps)
-        print(sitemap_availability)
+        log_success(sitemap_availability)
     else:
         log_error("Failed to retrieve robots.txt content.")
