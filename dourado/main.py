@@ -4,7 +4,6 @@ from start_sitemaps import consolidate_sitemaps
 from sitemap_crawler import crawl_sitemaps
 from virginia import check_page_availability
 from utils import normalize_url, log_success
-from check_robots import check_robots
 
 def website_sitemaps(website_url):
     log_success(f"#main.py => website_url:{website_url}")
@@ -25,4 +24,4 @@ def website_sitemaps(website_url):
     
 # Example usage
 website = 'https://mysitefaster.com/'
-log_success(website_sitemaps(website_url = website))  
+log_success(f"#main eu:{website_sitemaps(website_url = website)}")  

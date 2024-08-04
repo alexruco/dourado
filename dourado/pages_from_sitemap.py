@@ -1,8 +1,7 @@
 # pages_from_sitemap.py
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin
-from utils import log_error, log_success, normalize_url, is_content_page
+from utils import log_error, log_success, is_content_page
 
 def extract_pages_from_sitemap(sitemap_url):
     """
@@ -66,4 +65,4 @@ def crawl_sitemaps_for_pages(sitemaps):
 if __name__ == "__main__":
     sitemap = ['https://mysitefaster.com/post-sitemap.xml']
     pages = crawl_sitemaps_for_pages(sitemap)
-    print(pages)
+    print(f"#pages_from_sitemap eu:{pages}")

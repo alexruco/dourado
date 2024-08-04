@@ -1,4 +1,4 @@
-# My Python Module 🚀
+# Dourado 🚀
 
 Welcome to **My Python Module**! This project is designed to [brief description of what your module does].
 
@@ -7,13 +7,14 @@ Welcome to **My Python Module**! This project is designed to [brief description 
 - **website_sitemaps(website_url)**: Returns a list of sitemaps. 🎉
 - **check_robots(url)**: Returns the URL of robots; False is there is none. 🔥
 - **extract_pages_from_sitemap(sitemap_url)**: Returns pages and sitemaps fron where they are found. 🌟
+- **extract_sitemaps_from_robots(robots_txt_url)**: Returns sitemaps if any, their availability and validity. 🌟
 
 ## Installation 💻
 
 You can install the package via pip:
 
 ```bash
-pip install GIT+https://github.com/alexruco/dourado
+pip install GIT+https://github.com/alexruco/dourado 
 Usage 📚
 
 Here's a quick example to get you started:
@@ -26,6 +27,7 @@ website = 'https://mysitefaster.com/'
 robots = check_robots(url)
 sitemaps = website_sitemaps(website_url = website)
 pages_found = crawl_sitemaps_for_pages(sitemaps)
+sitemaps_on_robots = 
 
 print(f"robots:{robots}")  
 print(f"sitemaps:{sitemaps}")

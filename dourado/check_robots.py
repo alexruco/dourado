@@ -1,19 +1,13 @@
-# start_sitemaps.py
-from urllib.parse import urljoin, urlparse, urlunparse
 import requests
-from utils import log_error, log_success, remove_duplicates
+from urllib.parse import urljoin, urlparse
+from utils import log_error, log_success, ensure_https
 from virginia import check_page_availability
 from sitemap_validator import fetch_sitemap, validate_sitemap
+from sitemap_crawler import crawl_sitemaps
 
-def fetch_robots_txt(url):
+def check_robots(url):
     """
-    Fetches the content of the robots.txt file from the specified URL.
-    
-    Args:
-    url (str): The URL of the site to fetch the robots.txt file from.
-
-    Returns:
-    str: The content of the robots.txt file, or None if the fetch failed.
+    Checks the robots.txt file for the site and returns the URL if found.
     """
     if not url.startswith(('http://', 'https://')):
         url = 'https://' + url
@@ -24,7 +18,7 @@ def fetch_robots_txt(url):
     try:
         response = requests.get(robots_url)
         if response.status_code == 200:
-            return response.text
+            return robots_url
         else:
             log_error(f"Failed to fetch robots.txt: Status code {response.status_code}")
             return None
@@ -32,76 +26,88 @@ def fetch_robots_txt(url):
         log_error(f"Failed to fetch robots.txt: {e}")
         return None
 
-def ensure_https(url):
+def extract_sitemaps_from_robots(robots_url):
     """
-    Ensures that the URL uses the https scheme.
-
-    Args:
-    url (str): The URL to check and modify if necessary.
-
-    Returns:
-    str: The modified URL with https scheme.
-    """
-    parsed_url = urlparse(url)
-    if parsed_url.scheme != 'https':
-        parsed_url = parsed_url._replace(scheme='https')
-        url = urlunparse(parsed_url)
-    return url
-
-def extract_sitemaps_from_robots(robots_txt):
-    """
-    Extracts sitemap URLs from the content of a robots.txt file.
+    Extracts sitemap URLs from the robots.txt file at the given URL, and checks their availability and validity.
     
     Args:
-    robots_txt (str): The content of the robots.txt file.
+    robots_url (str): The URL of the robots.txt file.
 
     Returns:
-    list: A list of sitemap URLs found in the robots.txt file.
+    list: A list of tuples containing sitemap URLs, availability, and validity status.
     """
     sitemaps = []
-    lines = robots_txt.splitlines()
-    log_success(f"Total lines in robots.txt: {len(lines)}")
-    for line in lines:
-        line = line.strip()
-        log_success(f"Processing line: '{line}'")
-        if line.lower().startswith('sitemap:'):
-            sitemap_url = line.split(':', 1)[1].strip()
-            sitemap_url = ensure_https(sitemap_url)
-            sitemaps.append(sitemap_url)
-            log_success(f"Found sitemap: {sitemap_url}")
-    log_success(f"#start_sitemaps.py/extract_sitemaps_from_robots => sitemaps: {sitemaps}")
+    try:
+        response = requests.get(robots_url)
+        if response.status_code == 200:
+            robots_txt = response.text
+            lines = robots_txt.splitlines()
+            log_success(f"Total lines in robots.txt: {len(lines)}")
+            for line in lines:
+                line = line.strip()
+                log_success(f"Processing line: '{line}'")
+                if line.lower().startswith('sitemap:'):
+                    sitemap_url = line.split(':', 1)[1].strip()
+                    sitemap_url = ensure_https(sitemap_url)
+                    is_available = check_page_availability(sitemap_url)
+                    availability_status = 'available' if is_available else 'unavailable'
+                    validity = "unavailable"
+                    if is_available:
+                        sitemap_content = fetch_sitemap(sitemap_url)
+                        is_valid = validate_sitemap(sitemap_content) if sitemap_content else False
+                        validity = "valid" if is_valid else "invalid"
+                    sitemaps.append((sitemap_url, availability_status, validity))
+                    log_success(f"Found sitemap: {sitemap_url}, availability: {availability_status}, validity: {validity}")
+        else:
+            log_error(f"Failed to fetch robots.txt: Status code {response.status_code}")
+    except requests.RequestException as e:
+        log_error(f"Failed to fetch robots.txt: {e}")
+    log_success(f"#check_robots.py/extract_sitemaps_from_robots => sitemaps: {sitemaps}")
     return sitemaps if sitemaps else []
 
-def check_sitemaps_availability(sitemaps):
-    """
-    Checks the availability and validity of each sitemap URL.
-    
-    Args:
-    sitemaps (list): List of sitemap URLs to check.
+def common_sitemap_filenames(url):
+    common_filenames = [
+        'sitemap.xml', 
+        'sitemap-index.xml', 
+        'sitemap1.xml', 
+        'sitemap1-index.xml'
+    ]
+    sitemaps = []
+    for filename in common_filenames:
+        sitemap_url = f"{url.rstrip('/')}/{filename}"
+        response = requests.head(sitemap_url)
+        if response.status_code == 200:
+            sitemaps.append((sitemap_url, 'available', 'valid'))  # Assuming these common sitemaps are available and valid
+    log_success(f"#start_sitemaps.py/common_sitemap_filenames => sitemaps:{sitemaps}")
+    return sitemaps
 
-    Returns:
-    list: A list of tuples where each tuple contains a sitemap URL, a string indicating its availability ("available" or "unavailable"), and a string indicating its validity ("valid" or "invalid").
-    """
-    sitemap_availability = []
-    for sitemap in sitemaps:
-        is_available = check_page_availability(sitemap)
-        availability_status = 'available' if is_available else 'unavailable'
-        validity = "unavailable"
-        if is_available:
-            sitemap_content = fetch_sitemap(sitemap)
-            is_valid = validate_sitemap(sitemap_content) if sitemap_content else False
-            validity = "valid" if is_valid else "invalid"
-        sitemap_availability.append((sitemap, availability_status, validity))
-        log_success(f"#start_sitemaps.py/check_sitemaps_availability => sitemap: {sitemap}, availability: {availability_status}, validity: {validity}")
-    return sitemap_availability
+def consolidate_sitemaps(url):
+    log_success(f"consolidate_sitemaps url:{url}")
+    sitemaps = []
+
+    robots_url = check_robots(url)
+    log_success(f"consolidate_sitemaps robots_url:{robots_url}")
+    if robots_url:
+        sitemaps.extend(extract_sitemaps_from_robots(robots_url))
+
+    sitemaps.extend(common_sitemap_filenames(url))
+
+    # Remove duplicates while preserving order
+    unique_sitemaps = list(dict.fromkeys(sitemaps))
+    log_success(f"#start_sitemaps.py/consolidate_sitemaps => sitemaps:{unique_sitemaps}")
+    if unique_sitemaps:
+        log_success(f"start_sitemaps Found sitemaps: {unique_sitemaps}")
+    else:
+        log_error("No sitemaps found")
+
+    return unique_sitemaps
+
 # Example usage
 if __name__ == "__main__":
-    robots_txt_url = 'mysitefaster.com'
-    robots_txt = fetch_robots_txt(robots_txt_url)
-    if robots_txt:
-        log_success(f"Fetched robots.txt content:\n{robots_txt}")
-        sitemaps = extract_sitemaps_from_robots(robots_txt)
-        sitemap_availability = check_sitemaps_availability(sitemaps)
-        log_success(sitemap_availability)
-    else:
-        log_error("Failed to retrieve robots.txt content.")
+    url = 'https://mysitefaster.com'
+    found_sitemaps = consolidate_sitemaps(url)
+    print(found_sitemaps)
+
+    # Crawl discovered sitemaps
+    all_sitemaps = crawl_sitemaps(found_sitemaps)
+    print(all_sitemaps)

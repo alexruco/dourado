@@ -1,6 +1,5 @@
 # utils.py
 from urllib.parse import urlparse, urlunparse
-import requests
 
 def remove_duplicates(input_list):
     """
@@ -41,7 +40,6 @@ def is_content_page(url):
     if any(url.lower().endswith(ext) for ext in media_extensions):
         return False
     return True
-
 
 def log_error(message):
     print(message)
