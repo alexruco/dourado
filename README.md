@@ -4,10 +4,11 @@ Welcome to **Dourado**! This project is designed to bring info about a website s
 
 ## Features ✨
 
-- **robots_exists(website_url): ✅ Checks if robots.txt exists in the website root and returns a boolean.
-- **valid_sitemaps_robots(website_url): 🔍 Verifies if there is at least one available and valid sitemap in robots.txt and returns a boolean.
-- **website_sitemaps(website_url): 📜 Retrieves and returns a list of all sitemaps from the given website.
-- **pages_from_sitemaps(website_url): 🌐 Extracts and returns a list of page URLs from the sitemaps of the given website.
+- **robots_exists(website_url)**: ✅ Checks if `robots.txt` exists in the website root and returns a boolean.
+- **valid_sitemaps_robots(website_url)**: 🔍 Verifies if there is at least one available and valid sitemap in `robots.txt` and returns a boolean.
+- **website_sitemaps(website_url)**: 📜 Retrieves and returns a list of all sitemaps from the given website.
+- **pages_from_sitemaps(website_url)**: 🌐 Extracts and returns a list of page URLs from the sitemaps of the given website.
+
 
 
 ## Installation 💻
