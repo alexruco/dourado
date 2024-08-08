@@ -1,4 +1,4 @@
-# utils.py
+# dourado/utils.py
 from urllib.parse import urlparse, urlunparse
 
 def remove_duplicates(input_list):
