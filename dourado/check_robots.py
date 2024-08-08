@@ -3,8 +3,8 @@ from dourado.utils import log_error, log_success, ensure_https
 import requests
 from urllib.parse import urljoin, urlparse
 from virginia import check_page_availability
-from sitemap_validator import fetch_sitemap, validate_sitemap
-from sitemap_crawler import crawl_sitemaps
+from dourado.sitemap_validator import fetch_sitemap, validate_sitemap
+from dourado.sitemap_crawler import crawl_sitemaps
 
 def check_robots(url):
     """
