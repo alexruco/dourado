@@ -1,6 +1,7 @@
+# dourado/check_robots.py
+from utils import log_error, log_success, ensure_https
 import requests
 from urllib.parse import urljoin, urlparse
-from utils import log_error, log_success, ensure_https
 from virginia import check_page_availability
 from sitemap_validator import fetch_sitemap, validate_sitemap
 from sitemap_crawler import crawl_sitemaps
