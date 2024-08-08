@@ -13,10 +13,14 @@ __version__ = "0.1.0"
 
 # __init__.py
 
-from .start_sitemaps import (
+from .check_robots import (
     check_robots,
     consolidate_sitemaps,
     extract_sitemaps_from_robots,
+)
+from .start_sitemaps import (
+    common_sitemap_filenames,
+    consolidate_sitemaps,
 )
 from .sitemap_crawler import (
     crawl_sitemaps,

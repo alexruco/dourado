@@ -80,7 +80,7 @@ def valid_sitemaps_robots(website_url):
 
 # Example usage
 website = 'https://mysitefaster.com/'
-print(f"#main eu: valid_sitemaps_robots:{valid_sitemaps_robots(website_url=website)}")
-print(f"#main eu: website_sitemaps:{website_sitemaps(website_url=website)}")
+#print(f"#main eu: valid_sitemaps_robots:{valid_sitemaps_robots(website_url=website)}")
+#print(f"#main eu: website_sitemaps:{website_sitemaps(website_url=website)}")
 print(f"#main eu:pages_from_sitemaps:{pages_from_sitemaps(website_url=website)}")
-print(f"#main eu:robots_exists:{robots_exists(website_url=website)}")
+#print(f"#main eu:robots_exists:{robots_exists(website_url=website)}")
