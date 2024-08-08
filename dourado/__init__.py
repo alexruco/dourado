@@ -18,6 +18,7 @@ from .check_robots import (
     consolidate_sitemaps,
     extract_sitemaps_from_robots,
 )
+
 from .start_sitemaps import (
     common_sitemap_filenames,
     consolidate_sitemaps,
@@ -40,6 +41,7 @@ from .sitemap_validator import (
 )
 from .main import (
     website_sitemaps,
-    get_valid_available_sitemaps,
+    pages_from_sitemaps,
     valid_sitemaps_robots,
+    robots_exists,
 )
