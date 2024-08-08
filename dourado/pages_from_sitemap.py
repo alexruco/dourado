@@ -1,7 +1,7 @@
 # pages_from_sitemap.py
 import requests
 from bs4 import BeautifulSoup
-from utils import log_error, log_success, is_content_page
+from dourado.utils import log_error, log_success, is_content_page
 
 def extract_pages_from_sitemap(sitemap_url):
     """

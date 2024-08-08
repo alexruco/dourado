@@ -1,10 +1,10 @@
-from start_sitemaps import consolidate_sitemaps
-from sitemap_crawler import crawl_sitemaps
-from pages_from_sitemap import crawl_sitemaps_for_pages
+from dourado.start_sitemaps import consolidate_sitemaps
+from dourado.sitemap_crawler import crawl_sitemaps
+from dourado.pages_from_sitemap import crawl_sitemaps_for_pages
 from virginia import check_page_availability
-from utils import normalize_url, log_success, log_error
-from sitemap_validator import validate_sitemap, fetch_sitemap
-from check_robots import check_robots, extract_sitemaps_from_robots
+from dourado.utils import normalize_url, log_success, log_error
+from dourado.sitemap_validator import validate_sitemap, fetch_sitemap
+from dourado.check_robots import check_robots, extract_sitemaps_from_robots
 
 def website_sitemaps(website_url):
     log_success(f"#main.py => website_url:{website_url}")

@@ -1,7 +1,7 @@
 import requests
 from urllib.parse import urljoin
 from lxml import etree
-from utils import log_success, log_error
+from dourado.utils import log_success, log_error
 
 def extract_sitemaps_from_content(content):
     """

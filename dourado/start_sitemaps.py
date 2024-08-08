@@ -1,6 +1,6 @@
 import requests
-from check_robots import check_robots, extract_sitemaps_from_robots
-from utils import log_error, log_success, remove_duplicates
+from dourado.check_robots import check_robots, extract_sitemaps_from_robots
+from dourado.utils import log_error, log_success, remove_duplicates
 
 def common_sitemap_filenames(url):
     common_filenames = [

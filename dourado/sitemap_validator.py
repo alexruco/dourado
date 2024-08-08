@@ -1,7 +1,7 @@
 # sitemap_validator.py
 import requests
 import xml.etree.ElementTree as ET
-from utils import log_error, log_success
+from dourado.utils import log_error, log_success
 
 def fetch_sitemap(url):
     """

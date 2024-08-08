@@ -23,8 +23,8 @@ from .start_sitemaps import (
     consolidate_sitemaps,
 )
 from .sitemap_crawler import (
+    extract_sitemaps_from_content,
     crawl_sitemaps,
-    crawl_sitemaps_for_pages,
 )
 from virginia import (
     check_page_availability,
