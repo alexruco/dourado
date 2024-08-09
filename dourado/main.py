@@ -28,7 +28,7 @@ def website_sitemaps(website_url):
             validity = 'unavailable' if not is_available else 'invalid'
             if is_available:
                 sitemap_content = fetch_sitemap(sitemap_url)
-                is_valid = validate_sitemap(sitemap_content) if sitemap_content else False
+                is_valid = validate_sitemap(sitemap_content, sitemap_url) if sitemap_content else False
                 validity = 'valid' if is_valid else 'invalid'
             sitemaps_status.append({
                 'url': sitemap_url,
