@@ -55,7 +55,7 @@ def extract_sitemaps_from_robots(robots_url):
                     validity = "unavailable"
                     if is_available:
                         sitemap_content = fetch_sitemap(sitemap_url)
-                        is_valid = validate_sitemap(sitemap_content) if sitemap_content else False
+                        is_valid = validate_sitemap(sitemap_content, robots_url) if sitemap_content else False
                         validity = "valid" if is_valid else "invalid"
                     sitemaps.append((sitemap_url, availability_status, validity))
                     log_success(f"Found sitemap: {sitemap_url}, availability: {availability_status}, validity: {validity}")
