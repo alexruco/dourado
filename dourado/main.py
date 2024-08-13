@@ -79,8 +79,8 @@ def valid_sitemaps_robots(website_url):
     return False  # Return False if no valid and available sitemaps are found
 
 # Example usage
-#website = 'https://smileup.pt/'
+website = 'https://vivamelhor.pt/'
 #print(f"#main eu: valid_sitemaps_robots:{valid_sitemaps_robots(website_url=website)}")
 #print(f"#main eu: website_sitemaps:{website_sitemaps(website_url=website)}")
-#print(f"#main eu:pages_from_sitemaps:{pages_from_sitemaps(website_url=website)}")
+print(f"#main eu:pages_from_sitemaps:{pages_from_sitemaps(website_url=website)}")
 #print(f"#main eu:robots_exists:{robots_exists(website_url=website)}")
