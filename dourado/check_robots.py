@@ -27,7 +27,7 @@ def check_robots(url):
         log_error(f"Failed to fetch robots.txt: {e}")
         return None
     
-def sitemap_indicated_on_robots(url):
+def sitemap_indicated_on_robots(website_url):
     """
     Checks if at least one sitemap is indicated in the robots.txt file of the given website.
 
@@ -38,7 +38,7 @@ def sitemap_indicated_on_robots(url):
     bool: True if at least one sitemap is indicated in the robots.txt file, False otherwise.
     """
     # Get the robots.txt URL
-    robots_url = check_robots(url)
+    robots_url = check_robots(website_url)
     if not robots_url:
         return False
     
