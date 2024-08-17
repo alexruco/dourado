@@ -8,6 +8,7 @@ Welcome to **Dourado**! This project is designed to bring info about a website s
 - **valid_sitemaps_robots(website_url)**: 🔍 Verifies if there is at least one available and valid sitemap in `robots.txt` and returns a boolean.
 - **website_sitemaps(website_url)**: 📜 Retrieves and returns a list of all sitemaps from the given website.
 - **pages_from_sitemaps(website_url)**: 🌐 Extracts and returns a list of page URLs from the sitemaps of the given website.
+- **sitemap_indicated_on_robots(website_url)**: 📋 Checks if at least one sitemap is indicated in the `robots.txt` file of the given website and returns a boolean.
 
 
 
@@ -29,20 +30,18 @@ pip install -r requirements.txt
 ## Usage 📚
 
 Here's a quick example to get you started:
-<!--
+
 ```python
 from dourado import dourado
 
 # Example usage
 website = 'https://mysitefaster.com/'
-print(f"valid_sitemaps_robots:{valid_sitemaps_robots(website_url=website)}")
-print(f"website_sitemaps:{website_sitemaps(website_url=website)}")
-print(f"pages_from_sitemaps:{pages_from_sitemaps(website_url=website)}")
-print(f"#robots_exists:{robots_exists(website_url=website)}")
 
-```
--->
-
+print(f"valid_sitemaps_robots: {dourado.valid_sitemaps_robots(website_url=website)}")
+print(f"website_sitemaps: {dourado.website_sitemaps(website_url=website)}")
+print(f"pages_from_sitemaps: {dourado.pages_from_sitemaps(website_url=website)}")
+print(f"robots_exists: {dourado.robots_exists(website_url=website)}")
+print(f"sitemap_indicated_on_robots: {dourado.sitemap_indicated_on_robots(website_url=website)}")
 
 ## Contributing 🤝
 

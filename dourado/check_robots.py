@@ -26,6 +26,27 @@ def check_robots(url):
     except requests.RequestException as e:
         log_error(f"Failed to fetch robots.txt: {e}")
         return None
+    
+def sitemap_indicated_on_robots(url):
+    """
+    Checks if at least one sitemap is indicated in the robots.txt file of the given website.
+
+    Args:
+    url (str): The URL of the website.
+
+    Returns:
+    bool: True if at least one sitemap is indicated in the robots.txt file, False otherwise.
+    """
+    # Get the robots.txt URL
+    robots_url = check_robots(url)
+    if not robots_url:
+        return False
+    
+    # Extract sitemaps from the robots.txt file
+    sitemaps = extract_sitemaps_from_robots(robots_url)
+    
+    # Return True if there is at least one sitemap, otherwise False
+    return bool(sitemaps)
 
 def extract_sitemaps_from_robots(robots_url):
     """
@@ -105,10 +126,8 @@ def consolidate_sitemaps(url):
 
 # Example usage
 if __name__ == "__main__":
-    url = 'https://vivamelhor.pt'
-    found_sitemaps = consolidate_sitemaps(url)
-    print(found_sitemaps)
-
-    # Crawl discovered sitemaps
-    all_sitemaps = crawl_sitemaps(found_sitemaps)
-    print(all_sitemaps)
+    website_url = 'https://mysitefaster.com'
+    if sitemap_indicated_on_robots(website_url):
+        print("Sitemap is indicated in robots.txt")
+    else:
+        print("No sitemap indicated in robots.txt")
