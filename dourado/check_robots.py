@@ -128,6 +128,6 @@ def consolidate_sitemaps(url):
 if __name__ == "__main__":
     website_url = 'https://mysitefaster.com'
     if sitemap_indicated_on_robots(website_url):
-        print("Sitemap is indicated in robots.txt")
+        #print("Sitemap is indicated in robots.txt")
     else:
-        print("No sitemap indicated in robots.txt")
+        #print("No sitemap indicated in robots.txt")
