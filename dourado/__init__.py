@@ -17,6 +17,7 @@ from .check_robots import (
     check_robots,
     consolidate_sitemaps,
     extract_sitemaps_from_robots,
+    sitemap_indicated_on_robots,
 )
 
 from .start_sitemaps import (
